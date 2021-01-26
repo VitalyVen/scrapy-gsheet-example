@@ -9,7 +9,7 @@
 
 2. Installation
 #change server_cred.json with your own
-pip3 install -r requirements.txt
+install deps with ./dev.sh
 
 3. Launch with:
 scrapy crawl spider
