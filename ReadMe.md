@@ -10,6 +10,9 @@
 
 install, launch, test, lint with Makefile 
 
+# Known bugs
+clear only 1000 rows on start, and <30 colums, check it
+
 #Notes
 - do not forget share document with email from server_cred.json
 - sheet link https://docs.google.com/spreadsheets/d/foooooo/edit#gid=0
