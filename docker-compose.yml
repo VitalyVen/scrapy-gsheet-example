@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+    scrapy:
+      image: sheet_example_scrapy
+      container_name: sheet_example_scrapy
+      build:
+        context: .
+      ports:
+        - 6023:6023
+      env_file:
+        - env/local.env
+      working_dir: /app
+      command: sleep 100500
+      volumes:
+        - ./:/app
