@@ -1,12 +1,11 @@
 import google.auth.transport.requests
 import google.oauth2.credentials
+from google.auth.transport.requests import Request
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from scrapy.exporters import CsvItemExporter
-from scrapy.utils.python import to_native_str
 
 request_transport = google.auth.transport.requests.Request
-from google.auth.transport.requests import Request
 
 
 def get_credentials_from_service_account(scopes: list, service_account_path: str):
@@ -53,18 +52,16 @@ class GSheetExporter(CsvItemExporter):
     def _build_row(self, values):
         for s in values:
             try:
-                yield to_native_str(s, self.encoding)
+                yield str(s, self.encoding) if isinstance(s, bytes) else s
             except TypeError:
                 yield s
 
     def start_exporting(self) -> None:
         range_name = "A:K".format()  # 1000 rows default # TODO: handle not default rows
         self.service.spreadsheets().values().clear(spreadsheetId=self.file_id, range=range_name).execute()
-        super(GSheetExporter, self).start_exporting()
 
     def finish_exporting(self) -> None:
         self.write_rows_cache()
-        super(GSheetExporter, self).finish_exporting()
 
     def _write_headers_and_set_fields_to_export(self, item) -> None:
         if self.include_headers_line:

@@ -3,7 +3,7 @@ name = "gsheet_example"
 version = "1.0.0"
 description = "Contains gsheet example with exporter"
 authors = [{name = "vitalyven"}]
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 
 dependencies = [
     "scrapy>=2.12.0",
@@ -36,6 +36,7 @@ ignore_missing_imports = true
 
 [tool.ruff]
 line-length = 120
+exclude = ["examples"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]

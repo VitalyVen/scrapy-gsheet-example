@@ -1,8 +1,9 @@
+from typing import Any, Optional
+
 from scrapy import Spider
 from scrapy.utils.project import get_project_settings
 
-from scraper.gsheet_exporter import (GSheetExporter,
-                                     get_credentials_from_service_account)
+from scraper.gsheet_exporter import GSheetExporter, get_credentials_from_service_account
 
 settings = get_project_settings()
 
@@ -13,7 +14,7 @@ GSHEET_FILE_ID = settings["GSHEET_FILE_ID"]
 
 
 class ScraperPipeline:
-    def __init__(self, file_name: str | None = None) -> None:
+    def __init__(self, file_name: Optional[str] = None) -> None:
         # Storing output filename
         self.file_id = file_name
         self.file_id = None
@@ -26,6 +27,6 @@ class ScraperPipeline:
     def close_spider(self, spider: Spider) -> None:
         self.exporter.finish_exporting()
 
-    def process_item(self, item, spider: Spider):  # type: ignore
+    def process_item(self, item: Any, spider: Spider) -> Any:  # type: ignore
         self.exporter.export_item(item)
         return item

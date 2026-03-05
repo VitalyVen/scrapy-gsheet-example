@@ -1,4 +1,4 @@
-from typing import Iterator, Optional
+from typing import Any, Iterator, Optional
 
 from scrapy.crawler import CrawlerProcess
 from scrapy.http import Request, Response
@@ -11,7 +11,7 @@ settings = get_project_settings()
 
 class SimpleSpider(Spider):  # type: ignore[misc]
     name: Optional[str] = "quote"
-    custom_settings: dict[str, str | int | bool | dict[str, int]] = {
+    custom_settings: dict[str, Any] = {
         "ITEM_PIPELINES": {
             "scraper.pipelines.ScraperPipeline": 300,
         }
@@ -36,7 +36,7 @@ class SimpleSpider(Spider):  # type: ignore[misc]
 
 if __name__ == "__main__":
     # This part is not launched in production with scrapyd, used it for make your local development more productive
-    dev_settings: dict[str, str | int | bool | dict[str, int]] = {
+    dev_settings: dict[str, Any] = {
         "LOG_LEVEL": "DEBUG",
         # "HTTPCACHE_ENABLED": True,
     }
