@@ -8,14 +8,14 @@ RUN \
     && apt-get autoremove --purge -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -f /var/cache/apt/archives/*.deb \
-    # Remove temporary files owned by root from the platformtemplate step
-    && rm /tmp/* ||true
-RUN pip install cryptography==2.8 poetry
+    && rm -f /tmp/* ||true
 
-COPY ./pyproject.toml /pyproject.toml
+RUN pip install --no-cache-dir uv
 
-RUN poetry config virtualenvs.create false \
-  && poetry install --no-interaction --no-ansi
+COPY ./pyproject.toml ./uv.lock /
+
+RUN uv sync --frozen
+
 COPY . .
-# for local development there should be volume to not rebuild image for every change in code, rebuild only when dependencies has changed
+
 EXPOSE 6023
