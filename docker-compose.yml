@@ -9,7 +9,7 @@ services:
       ports:
         - 6023:6023
       env_file:
-        - env/local.env
+        - envs/local.env
       working_dir: /app
       command: sleep 100500
       volumes:
