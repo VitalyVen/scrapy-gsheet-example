@@ -1,4 +1,4 @@
-FROM python:3.10-slim-buster
+FROM python:3.14-slim-bookworm
 ENV LANG=C LC_ALL=C PYTHONUNBUFFERED=1
 RUN \
     DEBIAN_FRONTEND=noninteractive \

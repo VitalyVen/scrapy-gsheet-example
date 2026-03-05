@@ -1,3 +1,5 @@
+import os
+
 import google.auth.transport.requests
 import google.oauth2.credentials
 from google.auth.transport.requests import Request
@@ -17,7 +19,7 @@ def get_credentials_from_service_account(scopes: list, service_account_path: str
 
 
 class GSheetExporter(CsvItemExporter):
-    def __init__(self, creds, file_id, include_headers_line=True, join_multivalued=",", **kwargs):
+    def __init__(self, creds, file_id=None, include_headers_line=True, join_multivalued=",", **kwargs):
         self._configure(kwargs, dont_fail=True)
         if not self.encoding:
             self.encoding = "utf-8"
@@ -25,7 +27,7 @@ class GSheetExporter(CsvItemExporter):
         self._headers_not_written = True
         self._join_multivalued = join_multivalued
         self.service = build("sheets", "v4", credentials=creds)
-        self.file_id = file_id
+        self.file_id = file_id or os.getenv("GSHEET_FILE_ID")
         self.rows_cache = []  # there are no big data, it should be ok)
 
     def export_item(self, item) -> None:
